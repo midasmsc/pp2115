@@ -25,7 +25,7 @@ public class Main {
 
 
 
-//        UserDaoHibernateImpl studentDao = new UserDaoHibernateImpl();
+//        UserDaoHibernateImpl userDao = new UserDaoHibernateImpl();
 //
 //        User user = new User("Max", "Sukhanov", (byte) 33);
 //            UserDaoHibernateImpl.saveUser(user);
