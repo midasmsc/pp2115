@@ -1,5 +1,6 @@
 package jm.task.core.jdbc.util;
 
+import java.util.logging.Logger;
 import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -8,43 +9,37 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class Util {
-    // реализуйте настройку соеденения с БД
-    Connection connection;
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/Kata";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root1";
+
+    static Logger logger = Logger.getLogger("UtilLogger");
 
     public static Connection getConnection() {
         Connection connection = null;
         try {
             Class.forName(DB_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-            System.out.println("Соединение с БД установлено");
+            logger.info("Соединение с БД установлено");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return connection;
     }
 
-//    public static SessionFactory getSessionFactory() {
-//        Configuration configuration = new Configuration().addAnnotatedClass(User.class);
-//
-//        return configuration.buildSessionFactory();
-//    }
     private static SessionFactory sessionFactory;
+
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
 
-                // Hibernate settings equivalent to hibernate.cfg.xml's properties
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
                 settings.put(Environment.URL, "jdbc:mysql://localhost:3306/Kata");
